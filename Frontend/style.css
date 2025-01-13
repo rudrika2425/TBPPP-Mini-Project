@@ -1,11 +1,4 @@
-:root {
-    --main-bg-color: #edf5fe;
-    --light-blue: #03a9f4;
-    --border-color: #0288d147;
-    --container-width: 500px;
-  }
-  
-  body {
+ body {
     font-family: system-ui;
     background-color: white;
     height: 98vh;
@@ -18,20 +11,13 @@
     left: 10px;
     width: 200px;
   }
-  
-  .image-vector {
-    width: 60vw;
-    height: 60vh;
-    background-size: contain;
-  }
-  
+
   body,
   .upload-container,
   .drop-zone {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 14vw;
   }
   .upload-container,
   .drop-zone {
@@ -53,9 +39,8 @@
     font-weight: 500;
   }
   .drop-zone {
-    width: var(--container-width);
+    width: 500px;
     min-height: 200px;
     border-radius: 10px;
     margin: 30px;
-    transition: 0.2s all ease-in;
   }
