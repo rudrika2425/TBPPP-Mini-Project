@@ -1,8 +1,16 @@
 const express=require("express");
 const app=express();
 const PORT=8000;
-const mongoose=require("mongoose");
+const connectDB = require("./db");
+
+app.get("/",(req,res)=>{
+   res.send("Backend for Inshare");
+})
+
+connectDB();
+
+app.use(express.json());
 
 app.listen(PORT,()=>{
-    console.log("server connected");
+    console.log(`server is connected on ${PORT}`);
 })
