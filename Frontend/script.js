@@ -31,7 +31,7 @@ dropZone.addEventListener("drop", event => {
 });
 
 function uploadFile(file) {
-   c
+   
     console.log(`Uploading file: ${file.name}`);
     
 }
