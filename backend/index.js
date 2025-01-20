@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use('/upload',Upload);
-app.use("/api/v1/user",userRoute);
+app.use("/user",userRoute);
 
 app.listen(PORT,()=>{
     console.log(`server is connected on ${PORT}`);
