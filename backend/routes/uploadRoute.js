@@ -31,13 +31,12 @@ const storage = multer.diskStorage({
         message:'File uploaded succesfully',
         file:req.file,
 
-    }) 
-    console.log(req.file.originalname);
-    console.log(req.file.size);
+}) 
     }
     catch(err){
         console.log(err);
         return res.status(500).json({error:'Internal Server Error'});
     }
   })
+  
 module.exports=router;
