@@ -22,8 +22,6 @@ const bcrypt = require("bcryptjs");
             });
         }
         
-        
-
         const hashedPassword=await bcrypt.hash(password,10);
         await User.create({
             fullname,email,
