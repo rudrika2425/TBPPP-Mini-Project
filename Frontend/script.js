@@ -1,16 +1,13 @@
-const dropZone=document.querySelector(".drop-zone");
-const fileinput=document.querySelector("#fileinput");
-const browsebtn=document.querySelector(".browsebtn");
+const dropZone = document.getElementById("dropZone");
+const dropText = document.getElementById("dropText");
 
-// const host =
-//const uploadURL= host+ 
+["dragover", "dragenter", "dragleave", "drop"].forEach(eventName => {
+    dropZone.addEventListener(eventName, event => event.preventDefault());
+});
 
-
-//DRAG AND DROP INTERFACE
-dropZone.addEventListener("dragover",(e)=>{
-    e.preventDefault();// Prevents download by default
-    if(!dropZone.classList.contains("dragged")){
-        dropZone.classList.add("dragged");}
+dropZone.addEventListener("dragover", () => {
+    dropZone.classList.add("dragover");
+    dropText.textContent = "Drop your file here!";
 });
 dropZone.addEventListener("dragleave",()=>{
     dropZone.classList.remove("dragged");
