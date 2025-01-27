@@ -5,13 +5,16 @@ const Upload=require('./routes/uploadRoute')
 const cookieParser = require("cookie-parser");
 const connectDB=require('./db');
 const userRoute = require('./routes/userRoute');
-
+const path=require('path')
 const PORT = process.env.PORT || 8000;
+
 
 const cors = require('cors');
 
 app.use(cors());
-
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.set('view engine','ejs');
+app.set('views',path.join(__dirname,'views'));
 
 connectDB();
 
@@ -28,4 +31,3 @@ app.use("/user",userRoute);
 app.listen(PORT,()=>{
     console.log(`server is connected on ${PORT}`);
 });
-//http://localhost:8000/upload/file

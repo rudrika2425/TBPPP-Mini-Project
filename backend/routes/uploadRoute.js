@@ -1,13 +1,14 @@
 const multer = require('multer');
 const File=require('../models/files');
 const router=require('express').Router();
+const { v4: uuidv4 } =require('uuid');
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, './uploads');   
+      cb(null,'./uploads');   
     },
     filename: (req, file, cb) => {
-      cb(null, Date.now() + '-' + file.originalname);  
+      cb(null,file.originalname);  
     }
   });
 
@@ -22,6 +23,7 @@ const storage = multer.diskStorage({
 
     const newFile = new File({
         filename: req.file.originalname,
+        uuid:uuidv4(),
         path: req.file.path,
         size: req.file.size
     });
@@ -29,7 +31,7 @@ const storage = multer.diskStorage({
     await newFile.save();
     res.json({
         message:'File uploaded succesfully',
-        file:req.file,
+        file:`${process.env.BASE_URL}/upload/${newFile.uuid}`,
 
 }) 
     }
@@ -39,4 +41,22 @@ const storage = multer.diskStorage({
     }
   })
   
+  router.get('/:uuid',async (req,res)=>{
+    try{
+    const file=await File.findOne({uuid:req.params.uuid});
+    if(!file){
+      return res.status(404).json({ error: 'File not found' });
+    }
+    res.render('download',{filename:file.filename,uuid:file.uuid});
+    }
+    catch(err){
+        res.status(500).json('internal server error')
+    }
+
+
+  })
+
+  
+
+
 module.exports=router;
