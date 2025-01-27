@@ -1,13 +1,12 @@
-const dropZone = document.getElementById("dropZone");
-const dropText = document.getElementById("dropText");
+const dropZone = document.querySelector('.drop-zone');
+const fileinput=document.querySelector('#fileinput');
+const browsebtn=document.querySelector('.browsebtn');
 
-["dragover", "dragenter", "dragleave", "drop"].forEach(eventName => {
-    dropZone.addEventListener(eventName, event => event.preventDefault());
-});
-
-dropZone.addEventListener("dragover", () => {
-    dropZone.classList.add("dragover");
-    dropText.textContent = "Drop your file here!";
+dropZone.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    if(!dropZone.classList.contains("dragged")){
+        dropZone.classList.add("dragged");
+    }
 });
 dropZone.addEventListener("dragleave",()=>{
     dropZone.classList.remove("dragged");
@@ -24,14 +23,14 @@ dropZone.addEventListener("drop",(e)=>{
 });
 
 
-//XHR FILE HANDLING
+
 fileinput.addEventListener("change",()=>{
     uploadFile();
 })
 browsebtn.addEventListener("click",()=>{
     fileinput.click();
 });
-
+//XHR FILE HANDLING
 const uploadFile=()=>{
 
     const file=fileinput.files[0];  
