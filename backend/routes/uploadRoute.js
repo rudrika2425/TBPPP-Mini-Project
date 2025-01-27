@@ -2,7 +2,8 @@ const multer = require('multer');
 const File=require('../models/files');
 const router=require('express').Router();
 const { v4: uuidv4 } =require('uuid');
-
+const {authmiddleware}=require('../middlewares/authmiddleware')
+const User=require('../models/userModel')
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
       cb(null,'./uploads');   
@@ -14,7 +15,8 @@ const storage = multer.diskStorage({
 
   const upload=multer({storage});
 
-  router.post('/file',upload.single('file'),async (req,res)=>{
+  router.post('/file',authmiddleware,upload.single('file'),async (req,res)=>{
+   console.log(req.user);
 
     try{
     if(!req.file){
@@ -25,7 +27,8 @@ const storage = multer.diskStorage({
         filename: req.file.originalname,
         uuid:uuidv4(),
         path: req.file.path,
-        size: req.file.size
+        size: req.file.size,
+        user:req.user.userId,
     });
 
     await newFile.save();
@@ -41,22 +44,40 @@ const storage = multer.diskStorage({
     }
   })
   
+  router.get('/getfiles',authmiddleware,async(req,res)=>{
+    console.log(req.user);
+    try{
+        const files=await File.find({user:req.user.userId});
+        if(files.length===0){
+          return res.status(404).json({ message: 'No files found for this user' });
+        }
+        res.status(200).json({
+          message: 'Files fetched successfully',
+          files: files
+        });
+    }
+    catch(err){
+      console.log(err);
+    res.status(500).json({ message: 'Internal Server Error' });
+    }
+  })
+  
   router.get('/:uuid',async (req,res)=>{
     try{
     const file=await File.findOne({uuid:req.params.uuid});
     if(!file){
-      return res.status(404).json({ error: 'File not found' });
+      return res.status(404).json({ error: '"uuid:" File not found' });
     }
     res.render('download',{filename:file.filename,uuid:file.uuid});
     }
     catch(err){
         res.status(500).json('internal server error')
     }
-
-
   })
 
-  
+ 
+
+
 
 
 module.exports=router;
