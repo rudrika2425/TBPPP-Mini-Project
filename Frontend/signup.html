@@ -6,11 +6,11 @@
     <title>Sign Up</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .form-container{
+        .form-container {
             width: 400px;
             height: 500px;
         }
-        .form-container h1{
+        .form-container h1 {
             margin-left: 130px;
         }
     </style>
@@ -18,9 +18,9 @@
 <body>
     <div class="form-container">
         <h1>Sign Up</h1>
-        <form>
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required>
+        <form id="signupForm">
+            <label for="fullname">Full Name</label>
+            <input type="text" id="fullname" name="fullname" required>
             <br>
             <label for="email">Email</label>
             <input type="email" id="email" name="email" required>
@@ -28,12 +28,48 @@
             <label for="password">Password</label>
             <input type="password" id="password" name="password" required>
             <br>
-            <button type="submit">Sign Up</button>
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
             <br>
-            <div class="link">
-                <p>Already have an account? <a href="login.html">Login here</a></p>
-            </div>
+            <button type="submit">Sign Up</button>
         </form>
+        <div class="link">
+            <p>Already have an account? <a href="login.html">Login here</a></p>
+        </div>
     </div>
+    <script>
+        const signupForm = document.getElementById('signupForm');
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault(); // Prevent form submission from reloading the page
+            
+            const fullname = document.getElementById('fullname').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            try {
+                const response = await fetch('http://localhost:8000/user/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ fullname, email, password, confirmPassword }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert('Registration successful!');
+                    // Optionally redirect to login page
+                    window.location.href = '/Frontend/login.html';
+                } else {
+                    alert(data.message || 'Registration failed');
+                }
+            } catch (error) {
+                console.error('Error during signup:', error);
+                alert('An error occurred. Please try again later.');
+            }
+        });
+    </script>
 </body>
 </html>
