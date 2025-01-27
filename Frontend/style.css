@@ -1,62 +1,100 @@
-body {
-  font-family: system-ui;
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@500&display=swap');
+body, html {
+  font-family: "Dosis", serif;
   background-color: white;
-  height: 98vh;
-  overflow: hidden;
+  height: 100%; 
+  padding: 0;
+  margin: 0;
+  font-size: 25px;
 }
-
-.logo {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  width: 200px;
-}
-
-body,
-.upload-container,
-.drop-zone {
+body,.drop-zone{
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.upload-container,
-.drop-zone {
   flex-direction: column;
 }
-
-.upload-container {
-  background-color: white;
-  border-radius: 25px;
-  box-shadow: 0px 20px 20px 0px #00000017;
-  border: 4px solid black;
+.upload-container{
+  background-color: whitesmoke;
+  border: 3px solid black;
+  border-radius: 30px;
+  box-shadow: 0px 20px 20px #0000002e;
 }
-
-.icon-container img {
-  height: 100px;
-  width: 100px;
-}
-
-.text p {
-  font-size: 1.4em;
-  font-weight: 500;
-}
-
 .drop-zone {
-  width: 500px;
-  min-height: 200px;
-  border-radius: 10px;
+  width: 600px;
+  height: 300px;
+  border-radius: 30px;
   margin: 30px;
   border: 2px dashed black;
-  background-color: #f9f9f9;
-  transition: background-color 0.3s, border-color 0.3s;
+  background-color: whitesmoke;
+  transition: all .2s ease;
 }
 
-.drop-zone.dragover {
-  background-color: #f0f8ff;
-  border: 2px dashed #0078d7;
+.dragged.drop-zone{
+  background-color: #ededed;
+  border: 3px dashed #373737;
 }
 
-.drop-zone.dragover .text p {
-  color: #0078d7;
+.icon-container{
+  width:200px;
+  height: 200px;
+  position: relative;
 }
+.icon-container img{
+  width: 100px;
+}
+#fileinput{
+  display: none;
+}
+.browsebtn{
+  color: gray;
+  cursor: pointer;
+}
+
+.lottie-container{
+  height: 400px;
+  width: 300px;
+  border: 2px solid black;
+}
+/* Login SignUp Form */
+.form-container{
+  height: 400px;
+  width: 400px;
+  border: 2px solid black;
+  font-size: 22px;
+  box-shadow: 20px 20px 20px lightgray;
+  line-height: 2.0;
+}
+.form-container form{
+  height: 400px;
+  width: 400px;
+  padding-left: 20px;
+  
+}
+.form-container h1{
+  margin-left: 160px;
+}
+.form-container form input{
+  width: 250px;
+  height: 25px;
+  border-radius: 5px;
+}
+.form-container button{
+  margin-left: 125px;
+  height: 30px;
+  width: 100px;
+  border-radius: 20px ;
+  font-size: 15px;
+  margin-top: 20px;
+  background-color: white;
+}
+.form-container button:hover{
+  background-color: whitesmoke;
+  cursor: pointer;
+}
+.link{
+  padding: 20px;;
+}
+.link a{
+  color: black;
+}
+
