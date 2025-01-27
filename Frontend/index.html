@@ -3,18 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drag and Drop File Upload</title>
+    <title>InShare</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+
 </head>
 <body>
-    <img src="Images/logo.png" alt="InShare logo" class="logo">
     <section class="upload-container">
-        <div class="drop-zone" id="dropZone">
-            <div class="icon-container">
-                <img src="Images/fileLogo.jpeg" alt="FileLogo">
+        <div class="drop-zone">
+            <div class="icon-container" id="lottie-container">
+                <!-- <img src="Images/file.png" alt="File Icaon" draggable="false" > -->
             </div>
-            <div class="text">
-                <p id="dropText">Drag and Drop a File.</p>
+            <input type="file" id="fileinput">
+            <div class="title">
+                Drag and Drop you Files here or,
+                <span class="browsebtn"> browse</span>
             </div>
         </div>
     </section>

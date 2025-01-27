@@ -24,3 +24,4 @@ app.use("/user",userRoute);
 app.listen(PORT,()=>{
     console.log(`server is connected on ${PORT}`);
 });
+//http://localhost:8000/upload/file
