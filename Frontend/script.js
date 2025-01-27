@@ -7,7 +7,7 @@ const dropText = document.getElementById("dropText");
 
 dropZone.addEventListener("dragover", () => {
     dropZone.classList.add("dragover");
-    dropText.textContent = "Drop your file here!";
+    dropText.textContent = "Drop your file here";
 });
 
 dropZone.addEventListener("dragleave", () => {
