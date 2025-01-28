@@ -40,7 +40,7 @@
     <script>
         const signupForm = document.getElementById('signupForm');
         signupForm.addEventListener('submit', async (e) => {
-            e.preventDefault(); // Prevent form submission from reloading the page
+            e.preventDefault(); 
             
             const fullname = document.getElementById('fullname').value;
             const email = document.getElementById('email').value;
@@ -60,7 +60,7 @@
 
                 if (response.ok) {
                     alert('Registration successful!');
-                    // Optionally redirect to login page
+                   
                     window.location.href = '/Frontend/login.html';
                 } else {
                     alert(data.message || 'Registration failed');
