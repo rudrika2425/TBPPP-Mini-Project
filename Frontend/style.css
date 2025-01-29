@@ -7,7 +7,7 @@ body, html {
   margin: 0;
   font-size: 25px;
 }
-body,.drop-zone{
+body,.drop-zone,.upload-container{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,7 +24,7 @@ body,.drop-zone{
   height: 300px;
   border-radius: 30px;
   margin: 30px;
-  border: 2px dashed black;
+  border: 2px dashed gray;
   background-color: whitesmoke;
   transition: all .2s ease;
 }
@@ -98,3 +98,30 @@ body,.drop-zone{
   color: black;
 }
 
+/* progress-bar */
+.progress-container{
+  width: 600px;
+  height: 70px;
+  border: 1px solid grey;
+  margin-bottom: 25px;
+  border-radius: 10px;
+  position: relative;
+}
+.progress-container .bg-progress{
+  background-color:grey ;
+  width: 0%;
+  height: 100%;
+  transform-origin: left;
+  border-radius:5%;
+  transition: width .25s linear;
+  position: absolute;
+  display: none;
+}
+.progress-container .inner-container{
+  position: absolute;
+  z-index: 1;
+  margin: 10px 15px;
+}
+.inner-container{
+  font-size: 0.8rem;
+}
