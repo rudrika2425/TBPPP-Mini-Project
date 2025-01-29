@@ -13,6 +13,9 @@ const fileURL = document.querySelector("#fileURL");
 let file = null ;
 
 
+
+
+
 dropZone.addEventListener("dragover", (e) => {
     e.preventDefault();
     if(!dropZone.classList.contains("dragged")){
