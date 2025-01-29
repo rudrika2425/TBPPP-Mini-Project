@@ -108,7 +108,6 @@ const showLink=(response)=>{
 file=response.file;
 console.log(file);
 progressContainer.style.display=none;
-
 }
 
 
@@ -129,5 +128,31 @@ function playAnimation() {
     animation.play();
 }
 playAnimation();
+
+
+//HamBurger Menu
+
+// JavaScript to toggle the side tab and history section
+const hamburgerMenu = document.getElementById('hamburger-menu');
+const sideTab = document.getElementById('side-tab');
+const closeBtn = document.getElementById('close-btn');
+const historyTab = document.getElementById('history-tab');
+const historySection = document.getElementById('history-section');
+
+// Toggle side tab on hamburger menu click
+hamburgerMenu.addEventListener('click', () => {
+    sideTab.style.left = '0';
+});
+
+// Close side tab
+closeBtn.addEventListener('click', () => {
+    sideTab.style.left = '-250px';
+});
+
+// Show history section when clicked on "History" tab
+historyTab.addEventListener('click', () => {
+    historySection.style.display = 'block';
+});
+
 
 

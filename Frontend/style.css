@@ -1,37 +1,47 @@
 @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
 body, html {
   font-family: "Dosis", serif;
-  background-color: white;
-  height: 100%; 
+  background-image: radial-gradient(rgb(225, 116, 116),rgb(234, 193, 118),rgb(253, 253, 103));
+  height: 100%;
   padding: 0;
   margin: 0;
   font-size: 25px;
 }
-body,.drop-zone,.upload-container{
+
+.drop-zone,.upload-container{
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
 }
+
 .upload-container{
-  background-color: whitesmoke;
-  border: 3px solid black;
-  border-radius: 30px;
-  box-shadow: 0px 20px 20px #0000002e;
+  margin-top: 90px;
+  margin-left: 250px;
+  margin-right: 250px;
 }
+
+.upload-container{
+  background-color: #fff8e1; 
+  border: 3px solid #ffa500;
+  border-radius: 30px;
+  box-shadow: 0px 20px 20px rgba(255, 165, 0, 0.18); 
+}
+
 .drop-zone {
   width: 600px;
   height: 300px;
   border-radius: 30px;
   margin: 30px;
-  border: 2px dashed gray;
-  background-color: whitesmoke;
+  border: 2px dashed #ffa500; 
+  background-color: #fff8e1; 
   transition: all .2s ease;
 }
-
-.dragged.drop-zone{
-  background-color: #ededed;
-  border: 3px dashed #373737;
+.dragged{
+  border: 3px dashed rgb(248, 111, 0);
+  background-color: #fdf8ca;
 }
 
 .icon-container{
@@ -39,22 +49,168 @@ body,.drop-zone,.upload-container{
   height: 200px;
   position: relative;
 }
-.icon-container img{
-  width: 100px;
-}
+
 #fileinput{
   display: none;
 }
+
 .browsebtn{
-  color: gray;
+  color: #ffa500; 
+  cursor: pointer;
+}
+.browsebtn:hover{
+  color: #ea7d00;
+}
+
+.progress-container{
+  width: 600px;
+  height: 70px;
+  border: 1px solid #ffa500; 
+  margin-bottom: 25px;
+  border-radius: 10px;
+  position: relative;
+  background-color: #fff8e1; 
+}
+
+/* NavBar */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #efae6e; 
+  color: white;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  z-index: 100;
+  border-bottom: 2px solid white;
+  box-shadow: 1px 2px 1px rgba(255, 255, 255, 0.463);
+}
+
+#Header{
+  font-family: "Pacifico", serif;
+  font-weight: 400;
+  font-style: normal;
+  color: white; 
+}
+
+.navbar .hamburger-menu {
+  font-size: 30px;
   cursor: pointer;
 }
 
-.lottie-container{
-  height: 400px;
-  width: 300px;
-  border: 2px solid black;
+.navbar .nav-links {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
 }
+
+.navbar .nav-links li {
+  margin-left: 20px;
+}
+
+.navbar .nav-links a {
+  color: white;
+  text-decoration: none;
+}
+
+.side-tab {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background-color:  #efae6e; 
+  color: white;
+  padding-top: 60px;
+  transition: left 0.3s ease;
+  z-index: 200;
+}
+
+.side-tab .close-btn {
+  font-size: 30px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.side-tab .side-tab-links {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.side-tab .side-tab-links li {
+  padding: 10px;
+  text-align: left;
+}
+
+.side-tab .side-tab-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.history-section {
+  padding: 20px;
+  margin-top: 100px;
+  background-color: #fff8e1; 
+  width: 80%;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(255, 165, 0, 0.2); 
+}
+
+.history-section h2 {
+  font-size: 24px;
+  color: #ff7f00; 
+}
+
+.history-section p {
+  font-size: 18px;
+  color: #ff7f00; 
+}
+
+#LogOutBtn{
+  margin-left: 900px;
+  height: 40px;
+  border-radius: 20px;
+  width: 80px;
+  cursor: pointer;
+  border:2px solid white;
+  font-size: 0.6rem;
+  transition: 0.1s linear;
+  background-color: #ea7d00;
+  color: white; 
+}
+
+#LogOutBtn:hover{
+  background-color: #ffd54f; 
+  font-size: .62rem;
+  border: 2px solid #ff9800; 
+  color:orange;
+}
+
+#logo img{
+  height: 40px;
+  width: 40px;
+  margin-left: 50px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar .nav-links {
+    display: none;
+  }
+
+  .side-tab {
+    width: 200px;
+  }
+}
+
 /* Login SignUp Form */
 .form-container{
   height: 400px;
@@ -96,32 +252,4 @@ body,.drop-zone,.upload-container{
 }
 .link a{
   color: black;
-}
-
-/* progress-bar */
-.progress-container{
-  width: 600px;
-  height: 70px;
-  border: 1px solid grey;
-  margin-bottom: 25px;
-  border-radius: 10px;
-  position: relative;
-}
-.progress-container .bg-progress{
-  background-color:grey ;
-  width: 0%;
-  height: 100%;
-  transform-origin: left;
-  border-radius:5%;
-  transition: width .25s linear;
-  position: absolute;
-  display: none;
-}
-.progress-container .inner-container{
-  position: absolute;
-  z-index: 1;
-  margin: 10px 15px;
-}
-.inner-container{
-  font-size: 0.8rem;
 }

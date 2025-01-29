@@ -8,11 +8,28 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
 </head>
 <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="hamburger-menu" id="hamburger-menu">
+            &#9776; <!-- Hamburger icon -->
+        </div>
+        <div id="logo"><img src="Images/share.png" alt=""></div>
+        <div id="Header"> InShare</div>
+        <button id="LogOutBtn">Log Out</button>
+    </nav>
+
+    <!-- Side Tab (Hidden by Default) -->
+    <div class="side-tab" id="side-tab">
+        <div class="close-btn" id="close-btn">&#10005;</div>
+        <ul class="side-tab-links">
+            <li><a href="#" id="history-tab">History</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
     <section class="upload-container">
         <div class="drop-zone">
-            <div class="icon-container" id="lottie-container">
-               
-            </div>
+            <div class="icon-container" id="lottie-container"></div>
             <input type="file" id="fileinput">
             <div class="title">
                 Drag and Drop your Files here or,
@@ -29,7 +46,13 @@
             </div>
         </div>
     </section>
-    <button class="submit">Upload</button>
+    <button class="submit"></button>
+
+    <div class="history-section" id="history-section" style="display:none;">
+        <h2>History</h2>
+        <p>Your file upload history will be displayed here.</p>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
