@@ -11,7 +11,10 @@ const PORT = process.env.PORT || 8000;
 
 const cors = require('cors');
 
-app.use(cors());
+app.use(cors({
+    origin:"http://127.0.0.1:5501",
+    credentials:true
+}));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.set('view engine','ejs');
 app.set('views',path.join(__dirname,'views'));
