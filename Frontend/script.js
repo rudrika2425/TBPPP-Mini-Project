@@ -23,14 +23,15 @@ dropZone.addEventListener("dragleave",()=>{
 });
 dropZone.addEventListener("drop",(e)=>{
     e.preventDefault();
-    dropZone.classList.remove("dragged"); 
     const files=e.dataTransfer.files;
- 
-    if(files.length){
+    console.log(files);
+    if(files.length===1){
+        fileinput.files = files;
         displayFileName(files[0]);
         file=files[0];
         uploadFile();
     }
+    dropZone.classList.remove("dragged"); 
 }); 
 fileinput.addEventListener('change',(e)=>{
     if (e.target.files.length) {
@@ -40,7 +41,6 @@ fileinput.addEventListener('change',(e)=>{
     }
 })
 
-
 function displayFileName(file) {
     fileName.textContent = `Selected File: ${file.name}`;
 }
@@ -48,10 +48,7 @@ function displayFileName(file) {
 browsebtn.addEventListener("click",()=>{
     fileinput.click();
 });
-
  
-
-
 const uploadFile=()=>{
     const file=fileinput.files[0];  
     const formData=new FormData();
@@ -70,7 +67,12 @@ const uploadFile=()=>{
 
     xhr.onreadystatechange=()=>{
         if(xhr.readyState === XMLHttpRequest.DONE){
-            onFileUploadSuccess(xhr.responseText);
+            if (xhr.status === 200) {
+                onFileUploadSuccess(xhr.responseText);
+            } else {
+                console.error("Upload failed with status:", xhr.status);
+                alert("Failed to upload the file.");
+            }
         }
     };
     
@@ -87,15 +89,17 @@ const onFileUploadSuccess=(res)=>{
     title.innerText="uploaded"
     progressContainer.style.display = "none";  
     try {
-        const response = JSON.parse(res);   
+        const response = JSON.parse();   
         console.log('Parsed Response:', response);
-        if (response.file && response.file.trim() !== "") {
+        console.log(response.file);
+        if (response && response.file) {
             fileURL.value = response.file;
             console.log("Uploaded File URL:", response.file);
         } else {
             alert("Upload completed, but no file URL returned.");
         }
     } catch (error) {
+        
         console.error("Error parsing response:", error);
         alert("File uploaded, but an error occurred while processing the response.");
     }
