@@ -201,7 +201,7 @@ body, html {
   margin-left: 50px;
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
   .navbar .nav-links {
     display: none;
@@ -212,7 +212,7 @@ body, html {
   }
 }
 
-/* Login SignUp Form */
+
 .form-container{
   height: 400px;
   width: 400px;
