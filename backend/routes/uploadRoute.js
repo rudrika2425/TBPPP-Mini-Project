@@ -5,7 +5,8 @@ const { v4: uuidv4 } =require('uuid');
 const {authmiddleware}=require('../middlewares/authmiddleware')
 const User=require('../models/userModel')
 
-// const Sendmail=require('../controllers/email')
+const Sendmail=require('../controllers/email')
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
       cb(null,'./uploads');   
@@ -69,15 +70,23 @@ const storage = multer.diskStorage({
   
   router.post('/sendemail',authmiddleware,async (req,res)=>{
      const {uuid,emailTo}=req.body;
-     emailFrom=req.user.email;
+     const emailFrom=process.env.AUTH_MAIL
      if(!uuid || !emailTo || !emailFrom){
       return res.status(422).send({error:'All fields required'});
      }
      const file=await File.findOne({uuid:uuid})
-
        Sendmail({
-
+          from:emailFrom,
+          to:emailTo,
+          subject:'Inshare File sharing',
+          text:`${emailFrom} shared A file with you`,
+          html:require('../controllers/emailTemplate')({
+            emailFrom,
+            downloadLink:`${process.env.BASE_URL}/upload/${file.uuid}`,
+            size:parseInt(file.size/1000)+' KB',
+          })
        })
+       return res.send({success:true})
      
   })
   
