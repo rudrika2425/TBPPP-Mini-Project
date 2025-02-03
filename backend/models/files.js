@@ -27,6 +27,7 @@ const fileSchema=new Schema({
         ref:'User',
         required:true,
     },
+    expirationDate: { type: Date, required: true },
     // receiver:{
     //     type:String,
     //     required:true

@@ -25,6 +25,8 @@ const storage = multer.diskStorage({
     if(!req.file){
         return res.status(400).json({error:'No file uploaded'});
     }
+    const expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + 7); 
 
     const newFile = new File({
         filename: req.file.originalname,
@@ -32,11 +34,11 @@ const storage = multer.diskStorage({
         path: req.file.path,
         size: req.file.size,
         user:req.user.userId,
+        expirationDate: expirationDate,
     });
 
     await newFile.save();
     res.json({
-        
         message:'File uploaded succesfully',
         file:`${process.env.BASE_URL}/upload/${newFile.uuid}`,
 
