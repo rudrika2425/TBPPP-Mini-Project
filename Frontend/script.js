@@ -46,7 +46,7 @@ submit.addEventListener('click',async(e)=>{
         const res=await fetch('http://localhost:8000/upload/file',{
             method:'POST',
             credentials:'include',
-            body:'formData'
+            body:formData
         });
         const result=await res.json();
         console.log(result)
