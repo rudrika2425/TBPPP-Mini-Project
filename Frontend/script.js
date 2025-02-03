@@ -6,9 +6,10 @@ const percentDiv=document.querySelector('#percent');
 const progressContainer=document.querySelector(".progress-container")
 const fileName=document.querySelector('.file-name');
 const submit=document.querySelector('.submit');
-
+const progressBar=document.querySelector('.progress-bar');
 const title = document.querySelector(".title");
 const fileURL = document.querySelector("#fileURL");
+
 let file = null ;
 
 // const uploadURL=
@@ -28,7 +29,7 @@ dropZone.addEventListener("drop",(e)=>{
     if(files.length===1){
         fileinput.files = files;
         displayFileName(files[0]);
-        file=files[0];
+        
         uploadFile();
     }
     dropZone.classList.remove("dragged"); 
@@ -55,8 +56,7 @@ const uploadFile=()=>{
     formData.append("file",file);
 
     progressContainer.style.display="block";
-    bgProgress.style.width = `0%`;  
-    percentDiv.innerText = `0%`;
+    
     const xhr = new XMLHttpRequest();
 
     xhr.upload.onprogress = (e) => {
@@ -84,7 +84,6 @@ const uploadFile=()=>{
 
 const onFileUploadSuccess=(res)=>{
     console.log('Raw Response:', res);
-   
     fileinput.value="";
     title.innerText="uploaded"
     progressContainer.style.display = "none";  
@@ -109,7 +108,10 @@ const updateProgress=(e)=>{
     const percent=Math.round((100* e.loaded) / e.total);
     console.log(percent); 
     bgProgress.style.width=`${percent}%`;
+    const scaleX = `scaleX(${percent / 100})`;
+    bgProgress.style.transform = scaleX;
     percentDiv.innerText=`${percent}%`;
+    progressBar.style.transform = scaleX;
 }
  
   const animation = lottie.loadAnimation({

@@ -70,9 +70,10 @@ body, html {
   border-radius: 10px;
   position: relative;
   background-color: #fff8e1; 
+  display: none;
 }
 
-/* NavBar */
+ 
 
 .navbar {
   position: fixed;
