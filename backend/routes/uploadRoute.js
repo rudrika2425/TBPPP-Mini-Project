@@ -33,6 +33,7 @@ const storage = multer.diskStorage({
 
     await newFile.save();
     res.json({
+        
         message:'File uploaded succesfully',
         file:`${process.env.BASE_URL}/upload/${newFile.uuid}`,
 
