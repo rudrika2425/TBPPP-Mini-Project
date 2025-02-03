@@ -28,11 +28,7 @@ const fileSchema=new Schema({
         required:true,
     },
     expirationDate: { type: Date, required: true },
-    // receiver:{
-    //     type:String,
-    //     required:true
-    // }
-    
+   
 },{timestamps:true})
 
 const File=mongoose.model('File',fileSchema);
