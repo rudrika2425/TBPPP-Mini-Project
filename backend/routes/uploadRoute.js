@@ -4,6 +4,8 @@ const router=require('express').Router();
 const { v4: uuidv4 } =require('uuid');
 const {authmiddleware}=require('../middlewares/authmiddleware')
 const User=require('../models/userModel')
+
+// const Sendmail=require('../controllers/email')
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
       cb(null,'./uploads');   
@@ -63,20 +65,40 @@ const storage = multer.diskStorage({
     }
   })
   
+  router.post('/sendemail',authmiddleware,async (req,res)=>{
+     const {uuid,emailTo}=req.body;
+     emailFrom=req.user.email;
+     if(!uuid || !emailTo || !emailFrom){
+      return res.status(422).send({error:'All fields required'});
+     }
+     const file=await File.findOne({uuid:uuid})
+
+       Sendmail({
+
+       })
+     
+  })
+  
   router.get('/:uuid',async (req,res)=>{
     try{
     const file=await File.findOne({uuid:req.params.uuid});
     if(!file){
       return res.status(404).json({ error: '"uuid:" File not found' });
     }
-    res.render('download',{filename:file.filename,uuid:file.uuid});
+    res.render('download',{
+      filename:file.filename,
+      uuid:file.uuid,
+      fileSize:file.size
+    });
     }
     catch(err){
         res.status(500).json('internal server error')
     }
   })
 
-  
+
+
+
 
 
 module.exports=router;
