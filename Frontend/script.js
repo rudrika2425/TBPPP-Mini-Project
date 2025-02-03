@@ -6,6 +6,9 @@ const percentDiv=document.querySelector('#percent');
 const progressContainer=document.querySelector(".progress-container")
 const fileName=document.querySelector('.file-name');
 const submit=document.querySelector('.submit');
+
+const status = document.querySelector(".status");
+const fileURL = document.querySelector("#fileURL");
 let file = null ;
 
 // const uploadURL=
@@ -22,48 +25,21 @@ dropZone.addEventListener("drop",(e)=>{
     e.preventDefault();
     dropZone.classList.remove("dragged"); 
     const files=e.dataTransfer.files;
-    console.table(files);
+ 
     if(files.length){
-        // uploadFile();
         displayFileName(files[0]);
         file=files[0];
+        uploadFile();
     }
 }); 
 fileinput.addEventListener('change',(e)=>{
     if (e.target.files.length) {
         displayFileName(e.target.files[0]);    
         file=e.target.files[0]; 
+        uploadFile();
     }
 })
 
-
-submit.addEventListener('click',async(e)=>{
-
-    console.log(file);
-    const formData=new FormData();
-    formData.append('file',file);
-    try{
-        const res=await fetch('http://localhost:8000/upload/file',{
-            method:'POST',
-            credentials:'include',
-            body:formData
-        });
-        const result=await res.json();
-        console.log(result)
-        if(res.ok){
-            alert('file uploaded successfully');
-            fileName.textContent ="";
-
-        }
-        else{
-            alert('some error occured, Please try again!!')
-            fileName.textContent ="";
-        }
-    }
-    catch(err){
-        console.log("error detected");
-    }
-})
 
 function displayFileName(file) {
     fileName.textContent = `Selected File: ${file.name}`;
@@ -73,35 +49,55 @@ browsebtn.addEventListener("click",()=>{
     fileinput.click();
 });
 
-fileinput.addEventListener("change",()=>{
-    uploadFile();
-});
+ 
 
 
 const uploadFile=()=>{
-    progressContainer.style.display="block";
+    
     const file=fileinput.files[0];  
     const formData=new FormData();
     formData.append("myfile",file);
 
+    progressContainer.style.display="block";
+    bgProgress.style.width = `0%`;  
+    percentDiv.innerText = `0%`;
     const xhr = new XMLHttpRequest();
+
+    xhr.upload.onprogress = (e) => {
+        if (e.lengthComputable) {
+            updateProgress(e);
+        }
+    };
 
     xhr.onreadystatechange=()=>{
         if(xhr.readyState === XMLHttpRequest.DONE){
-            console.log(xhr.response); 
-            showLink(JSON.parse(xhr.response));//converts to js object
+            onFileUploadSuccess(xhr.responseText);
         }
     };
-    xhr.upload.onprogress=updateProgress;
-    xhr.open("POST", uploadURL);
+    
+    xhr.open("POST",'http://localhost:8000/upload/file',true);
+    
     xhr.send(formData);
 };
 
+const onFileUploadSuccess=(res)=>{
+    fileinput.value="";
+    status.innerText="Uploaded";
+    progressContainer.style.display = "none";  
+   
+    if (res.file) {
+        fileURL.value = res.file;
+        console.log("Uploaded File URL:", res.file);
+    } else {
+        alert("Upload completed, but no file URL returned.");
+    }
+}
+
 const updateProgress=(e)=>{
-    const percent=Math.round((e.loaded / e.total) *100);
+    const percent=Math.round((100* e.loaded) / e.total);
     console.log(percent); 
     bgProgress.style.width=`${percent}%`;
-    percentDiv.innerText=percent;
+    percentDiv.innerText=`${percent}%`;
 }
  
 const showLink=(response)=>{
