@@ -7,7 +7,7 @@ const progressContainer=document.querySelector(".progress-container")
 const fileName=document.querySelector('.file-name');
 const submit=document.querySelector('.submit');
 
-const status = document.querySelector(".status");
+const title = document.querySelector(".title");
 const fileURL = document.querySelector("#fileURL");
 let file = null ;
 
@@ -53,10 +53,9 @@ browsebtn.addEventListener("click",()=>{
 
 
 const uploadFile=()=>{
-    
     const file=fileinput.files[0];  
     const formData=new FormData();
-    formData.append("myfile",file);
+    formData.append("file",file);
 
     progressContainer.style.display="block";
     bgProgress.style.width = `0%`;  
@@ -76,20 +75,29 @@ const uploadFile=()=>{
     };
     
     xhr.open("POST",'http://localhost:8000/upload/file',true);
-    
+    xhr.withCredentials=true
     xhr.send(formData);
+    console.log(formData);
 };
 
 const onFileUploadSuccess=(res)=>{
-    fileinput.value="";
-    status.innerText="Uploaded";
-    progressContainer.style.display = "none";  
+    console.log('Raw Response:', res);
    
-    if (res.file) {
-        fileURL.value = res.file;
-        console.log("Uploaded File URL:", res.file);
-    } else {
-        alert("Upload completed, but no file URL returned.");
+    fileinput.value="";
+    title.innerText="uploaded"
+    progressContainer.style.display = "none";  
+    try {
+        const response = JSON.parse(res);   
+        console.log('Parsed Response:', response);
+        if (response.file && response.file.trim() !== "") {
+            fileURL.value = response.file;
+            console.log("Uploaded File URL:", response.file);
+        } else {
+            alert("Upload completed, but no file URL returned.");
+        }
+    } catch (error) {
+        console.error("Error parsing response:", error);
+        alert("File uploaded, but an error occurred while processing the response.");
     }
 }
 
@@ -100,11 +108,6 @@ const updateProgress=(e)=>{
     percentDiv.innerText=`${percent}%`;
 }
  
-const showLink=(response)=>{
-file=response.file;
-console.log(file);
-progressContainer.style.display=none;
-}
   const animation = lottie.loadAnimation({
     container: document.getElementById('lottie-container'), 
     renderer: 'svg',
