@@ -77,7 +77,7 @@ fileinput.addEventListener("change",()=>{
     uploadFile();
 });
 
-//XHR FILE HANDLING
+
 const uploadFile=()=>{
     progressContainer.style.display="block";
     const file=fileinput.files[0];  
@@ -109,14 +109,6 @@ file=response.file;
 console.log(file);
 progressContainer.style.display=none;
 }
-
-
-
-
-
-
-
-//LOTTIE ANIMATION HANDLING
   const animation = lottie.loadAnimation({
     container: document.getElementById('lottie-container'), 
     renderer: 'svg',
@@ -130,29 +122,48 @@ function playAnimation() {
 playAnimation();
 
 
-//HamBurger Menu
 
-// JavaScript to toggle the side tab and history section
 const hamburgerMenu = document.getElementById('hamburger-menu');
 const sideTab = document.getElementById('side-tab');
 const closeBtn = document.getElementById('close-btn');
 const historyTab = document.getElementById('history-tab');
 const historySection = document.getElementById('history-section');
 
-// Toggle side tab on hamburger menu click
+
 hamburgerMenu.addEventListener('click', () => {
     sideTab.style.left = '0';
 });
 
-// Close side tab
+
 closeBtn.addEventListener('click', () => {
     sideTab.style.left = '-250px';
 });
 
-// Show history section when clicked on "History" tab
+
 historyTab.addEventListener('click', () => {
     historySection.style.display = 'block';
 });
+
+document.getElementById("LogOutBtn").addEventListener("click", function() {
+    fetch("http://localhost:8000/user/logout", {
+        method: "GET",
+        credentials: "include", 
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message === "log out successfully") {
+            alert(data.message);  
+            window.location.href = "/Frontend/login.html"; 
+        } else {
+            alert("Logout failed");
+        }
+    })
+    .catch(error => {
+        console.log("Error during logout:", error);
+        alert("Logout failed");
+    });
+});
+
 
 
 

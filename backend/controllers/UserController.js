@@ -79,14 +79,22 @@ const bcrypt = require("bcryptjs");
     }
 }
 
- const logout=(req,res)=>{
-try{
-return res.status(200).cookie("token","",{maxAge:0}).json({
-    message:"log out succesfully"
-})
-}
-catch(e){
-    console.log(e);
-}
-}
+const logout = (req, res) => {
+    try {
+        res.clearCookie("token", {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',  // Set to true in production
+            sameSite: 'strict', // or 'lax' based on your needs
+        });
+        return res.status(200).json({
+            message: "log out successfully"
+        });
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({
+            message: "Logout failed"
+        });
+    }
+};
+
 module.exports = { register, login, logout };
