@@ -3,9 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>InShare Download</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .navbar {
+            display: flex;
+            align-items: center;
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-right: auto;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 60px);
+            text-align: center;
+            padding: 0 20px;
+        }
+        .download-message {
+            max-width: 500px;
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        .download-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .download-btn:hover {
+            background-color: #45a049;
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+        .download-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
 </head>
 <body>
-    <a href="/uploads/<%= filename %>" download style="color: white; background: green; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Download</a>
+    <nav class="navbar">
+        <div class="navbar-brand">InShare</div>
+    </nav>
+    <div class="content">
+        <p class="download-message">You may download your file by clicking this button. Thanks for choosing InShare.</p>
+        <a href="/uploads/<%= filename %>" download class="download-btn">Download</a>
+    </div>
 </body>
 </html>
