@@ -254,3 +254,33 @@ body, html {
 .link a{
   color: black;
 }
+
+/* sharing-container */
+.sharing-container .input-container{
+  position: relative;
+}
+.sharing-container{
+  width: 600px;
+  margin-bottom: 20px;
+}
+.sharing-container .input-container input{
+  width: 100%;
+  border: 2px dashed #ffa500;
+  border-radius: 10px;
+  padding: 10px 15px;
+  box-sizing: border-box;
+  font-size: 20px;
+}
+
+.input-container img{
+  position: absolute;
+  height: 20px;
+  width: 30px;
+  right: 7px;
+  top:12px;
+  cursor: pointer;
+}
+
+.expire{
+  margin-left: 30%;
+}
