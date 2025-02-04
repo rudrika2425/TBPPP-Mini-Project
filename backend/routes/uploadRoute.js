@@ -27,7 +27,6 @@ const storage = multer.diskStorage({
     }
     const expirationDate = new Date();
     expirationDate.setDate(expirationDate.getDate() + 7); 
-
     const newFile = new File({
         filename: req.file.originalname,
         uuid:uuidv4(),

@@ -1,0 +1,5 @@
+land area -acres
+irrigation medium - rainfed, tubewell, canal, tank
+soil- N,P,K, pH
+location
+tools used- 

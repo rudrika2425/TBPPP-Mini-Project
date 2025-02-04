@@ -20,21 +20,22 @@ dropZone.addEventListener("dragover", (e) => {
     }
 });
 dropZone.addEventListener("dragleave",()=>{
+    e.preventDefault();
     dropZone.classList.remove("dragged");
 });
 dropZone.addEventListener("drop",(e)=>{
-    e.preventDefault();
+    
     const files=e.dataTransfer.files;
     console.log(files);
     if(files.length===1){
         fileinput.files = files;
         displayFileName(files[0]);
-        
         uploadFile();
     }
     dropZone.classList.remove("dragged"); 
 }); 
 fileinput.addEventListener('change',(e)=>{
+    e.preventDefault();
     if (e.target.files.length) {
         displayFileName(e.target.files[0]);    
         file=e.target.files[0]; 
@@ -50,11 +51,11 @@ browsebtn.addEventListener("click",()=>{
     fileinput.click();
 });
  
-const uploadFile=()=>{
+const uploadFile=(event)=>{
+ 
     const file=fileinput.files[0];  
     const formData=new FormData();
     formData.append("file",file);
-
     progressContainer.style.display="block";
     
     const xhr = new XMLHttpRequest();
@@ -64,7 +65,6 @@ const uploadFile=()=>{
             updateProgress(e);
         }
     };
-
     xhr.onreadystatechange=()=>{
         if(xhr.readyState === XMLHttpRequest.DONE){
             if (xhr.status === 200) {
@@ -75,7 +75,6 @@ const uploadFile=()=>{
             }
         }
     };
-    
     xhr.open("POST",'http://localhost:8000/upload/file',true);
     xhr.withCredentials=true
     xhr.send(formData);
@@ -86,14 +85,16 @@ const onFileUploadSuccess=(res)=>{
     console.log('Raw Response:', res);
     fileinput.value="";
     title.innerText="uploaded"
-    progressContainer.style.display = "none";  
+    
     try {
-        const response = JSON.parse();   
+        const response = JSON.parse(res);   
         console.log('Parsed Response:', response);
         console.log(response.file);
         if (response && response.file) {
-            fileURL.value = response.file;
+            fileURL.innerText = response.file;
+            fileURL.style.display = "block";
             console.log("Uploaded File URL:", response.file);
+             
         } else {
             alert("Upload completed, but no file URL returned.");
         }
@@ -102,16 +103,18 @@ const onFileUploadSuccess=(res)=>{
         console.error("Error parsing response:", error);
         alert("File uploaded, but an error occurred while processing the response.");
     }
+    setTimeout(()=>{
+        progressContainer.style.display="none";
+        bgProgress.style.width = "0%";   
+        percentDiv.innerText = "";  
+    }, 4000); 
 }
 
 const updateProgress=(e)=>{
     const percent=Math.round((100* e.loaded) / e.total);
     console.log(percent); 
     bgProgress.style.width=`${percent}%`;
-    const scaleX = `scaleX(${percent / 100})`;
-    bgProgress.style.transform = scaleX;
     percentDiv.innerText=`${percent}%`;
-    progressBar.style.transform = scaleX;
 }
  
   const animation = lottie.loadAnimation({
