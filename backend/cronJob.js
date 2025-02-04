@@ -17,7 +17,6 @@ const runCronJob = () => {
             if (err) {
               console.log(`Error deleting file: ${file.filename}`, err);
             } else {
-              
               await File.deleteOne({ uuid: file.uuid });
               console.log(`File ${file.filename} deleted successfully.`);
             }
