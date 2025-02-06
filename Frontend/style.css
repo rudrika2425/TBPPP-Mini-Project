@@ -201,6 +201,39 @@ body, html {
   margin-left: 50px;
 }
 
+.email-container {
+  margin-top: 20px;
+  display: none;
+}
+
+.email-container label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.email-container input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#sendEmailBtn {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#sendEmailBtn:hover {
+  background-color: #218838;
+}
+
+
 
 @media (max-width: 768px) {
   .navbar .nav-links {

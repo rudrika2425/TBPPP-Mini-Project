@@ -10,6 +10,8 @@ const progressBar=document.querySelector('.progress-bar');
 const title = document.querySelector(".title");
 const fileURL = document.querySelector("#fileURL");
 
+const button=document.getElementById('sendEmailBtn');
+
 let file = null ;
 
 dropZone.addEventListener("dragover", (e) => {
@@ -93,22 +95,19 @@ const onFileUploadSuccess=(res)=>{
         if (response && response.file) {
             fileURL.value = response.file;
             fileURL.style.display = "block";
-            console.log("Uploaded File URL:", response.file);
-           
-             
+            document.querySelector('.email-container').style.display = 'block';
+            
         } else {
             alert("Upload completed, but no file URL returned.");
         }
     } catch (error) {
-        
-        console.error("Error parsing response:", error);
         alert("File uploaded, but an error occurred while processing the response.");
     }
     setTimeout(()=>{
         progressContainer.style.display="none";
         bgProgress.style.width = "0%";   
         percentDiv.innerText = "";  
-    }, 2000); 
+    }, 1000); 
 }
 
 const updateProgress=(e)=>{
@@ -117,6 +116,43 @@ const updateProgress=(e)=>{
     bgProgress.style.width=`${percent}%`;
     percentDiv.innerText=`${percent}%`;
 }
+
+button.addEventListener('click',async()=>{
+    const senderEmail = document.getElementById('senderEmail').value;
+    const receiverEmail = document.getElementById('receiverEmail').value;
+    const url = fileURL.value;
+
+    if (!senderEmail || !receiverEmail || !fileURL) {
+        alert('Please fill out all fields.');
+        return;
+    }
+    try{
+        const uuid = fileURL.split('/').pop();
+        const response=await fetch('http://localhost:8000/upload/sendmail',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json',
+            },
+            body:JSON.stringify({
+                uuid: uuid,
+                emailTo: receiverEmail
+            })
+        })
+
+        const result=await response.json();
+        if (response.status === 200 && result.success) {
+            alert('Email sent successfully!');
+        } else {
+            alert('Failed to send email. Please try again.');
+        }
+
+    }
+    catch(err){
+        console.error('Error sending email:', err);
+        alert('An error occurred. Please try again later.');
+    }
+
+} )
  
   const animation = lottie.loadAnimation({
     container: document.getElementById('lottie-container'), 
