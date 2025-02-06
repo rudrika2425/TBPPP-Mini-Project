@@ -12,16 +12,13 @@ const fileURL = document.querySelector("#fileURL");
 
 let file = null ;
 
-
-
-
-
 dropZone.addEventListener("dragover", (e) => {
     e.preventDefault();
     if(!dropZone.classList.contains("dragged")){
         dropZone.classList.add("dragged");
     }
 });
+
 dropZone.addEventListener("dragleave",()=>{
     e.preventDefault();
     dropZone.classList.remove("dragged");
@@ -55,7 +52,7 @@ browsebtn.addEventListener("click",()=>{
 });
  
 const uploadFile=(event)=>{
- 
+    event?.preventDefault();
     const file=fileinput.files[0];  
     const formData=new FormData();
     formData.append("file",file);
@@ -72,6 +69,7 @@ const uploadFile=(event)=>{
         if(xhr.readyState === XMLHttpRequest.DONE){
             if (xhr.status === 200) {
                 onFileUploadSuccess(xhr.responseText);
+               
             } else {
                 console.error("Upload failed with status:", xhr.status);
                 alert("Failed to upload the file.");
@@ -88,15 +86,15 @@ const onFileUploadSuccess=(res)=>{
     console.log('Raw Response:', res);
     fileinput.value="";
     title.innerText="uploaded"
-    
     try {
         const response = JSON.parse(res);   
         console.log('Parsed Response:', response);
         console.log(response.file);
         if (response && response.file) {
-            fileURL.innerText = response.file;
+            fileURL.value = response.file;
             fileURL.style.display = "block";
             console.log("Uploaded File URL:", response.file);
+           
              
         } else {
             alert("Upload completed, but no file URL returned.");
@@ -110,7 +108,7 @@ const onFileUploadSuccess=(res)=>{
         progressContainer.style.display="none";
         bgProgress.style.width = "0%";   
         percentDiv.innerText = "";  
-    }, 4000); 
+    }, 2000); 
 }
 
 const updateProgress=(e)=>{

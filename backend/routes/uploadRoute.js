@@ -3,18 +3,21 @@ const File=require('../models/files');
 const router=require('express').Router();
 const { v4: uuidv4 } =require('uuid');
 const {authmiddleware}=require('../middlewares/authmiddleware')
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const cloudinary=require('../cloudinaryConfig')
 const User=require('../models/userModel')
 
 const Sendmail=require('../controllers/email')
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null,'./uploads');   
-    },
-    filename: (req, file, cb) => {
-      cb(null,file.originalname);  
+
+  const storage=new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params:{
+      folder:'inshare',
+      resource_type:'auto',
+      public_id: (req, file) => `${file.originalname}`
     }
-  });
+  })
 
   const upload=multer({storage});
 
@@ -25,6 +28,7 @@ const storage = multer.diskStorage({
     if(!req.file){
         return res.status(400).json({error:'No file uploaded'});
     }
+    console.log('Uploaded file:', req.file);
     const expirationDate = new Date();
     expirationDate.setDate(expirationDate.getDate() + 7); 
     const newFile = new File({
@@ -44,11 +48,12 @@ const storage = multer.diskStorage({
 }) 
     }
     catch(err){
-        console.log(err);
+        console.log("error is:"+err);
         return res.status(500).json({error:'Internal Server Error'});
     }
   })
-  
+ 
+
   router.get('/getfiles',authmiddleware,async(req,res)=>{
     console.log(req.user);
     try{
@@ -66,6 +71,7 @@ const storage = multer.diskStorage({
     res.status(500).json({ message: 'Internal Server Error' });
     }
   })
+
   
   router.post('/sendemail',authmiddleware,async (req,res)=>{
      const {uuid,emailTo}=req.body;
@@ -95,9 +101,11 @@ const storage = multer.diskStorage({
     if(!file){
       return res.status(404).json({ error: '"uuid:" File not found' });
     }
+    console.log(req.params.uuid)
     res.render('download',{
       filename:file.filename,
       uuid:file.uuid,
+      path:file.path,
       fileSize:file.size
     });
     }
@@ -105,5 +113,6 @@ const storage = multer.diskStorage({
         res.status(500).json('internal server error')
     }
   })
+ 
 
 module.exports=router;
