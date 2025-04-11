@@ -14,7 +14,8 @@ const Sendmail=require('../controllers/email')
     cloudinary: cloudinary,
     params:{
       folder:'inshare',
-      resource_type:'auto',
+      resource_type:'raw',
+      access_mode:"public",
       public_id: (req, file) => `${file.originalname}`
     }
   })
@@ -61,6 +62,7 @@ const Sendmail=require('../controllers/email')
         if(files.length===0){
           return res.status(404).json({ message: 'No files found for this user' });
         }
+        console.log("take"+files);
         res.status(200).json({
           message: 'Files fetched successfully',
           files: files
@@ -101,7 +103,9 @@ const Sendmail=require('../controllers/email')
     if(!file){
       return res.status(404).json({ error: '"uuid:" File not found' });
     }
-    console.log(req.params.uuid)
+    console.log(req.params.uuid);
+    console.log(file);
+    
     res.render('download',{
       filename:file.filename,
       uuid:file.uuid,
