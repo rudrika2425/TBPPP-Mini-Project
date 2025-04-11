@@ -1,8 +1,8 @@
 const express = require("express"); 
-const Upload=require('./routes/uploadRoute')
+
 const cookieParser = require("cookie-parser");
 const connectDB=require('./db');
-const userRoute = require('./routes/userRoute');
+
 const path=require('path')
 const cronJob = require('./cronJob');
 
@@ -27,6 +27,8 @@ app.get("/",(req,res)=>{
 
 app.use(express.json());
 app.use(cookieParser());
+const userRoute = require('./routes/userRoute');
+const Upload=require('./routes/uploadRoute')
 
 app.use('/upload',Upload);
 app.use("/user",userRoute);

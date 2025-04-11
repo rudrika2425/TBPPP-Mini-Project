@@ -12,7 +12,7 @@ const fileURL = document.querySelector("#fileURL");
 
 const button=document.getElementById('sendEmailBtn');
 
-let file = null ;
+let file = null;
 
 dropZone.addEventListener("dragover", (e) => {
     e.preventDefault();
@@ -118,21 +118,24 @@ const updateProgress=(e)=>{
 }
 
 button.addEventListener('click',async()=>{
-    const senderEmail = document.getElementById('senderEmail').value;
     const receiverEmail = document.getElementById('receiverEmail').value;
+    console.log("receiverEmail "+receiverEmail);
     const url = fileURL.value;
+    console.log(url);
 
-    if (!senderEmail || !receiverEmail || !fileURL) {
+    if ( !receiverEmail || !fileURL) {
         alert('Please fill out all fields.');
         return;
     }
     try{
-        const uuid = fileURL.split('/').pop();
-        const response=await fetch('http://localhost:8000/upload/sendmail',{
+        const uuid = url.split('/').pop();
+        console.log("uuid: "+uuid);
+        const response=await fetch('http://localhost:8000/upload/sendemail',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json',
             },
+            credentials: 'include',
             body:JSON.stringify({
                 uuid: uuid,
                 emailTo: receiverEmail
@@ -140,20 +143,20 @@ button.addEventListener('click',async()=>{
         })
 
         const result=await response.json();
+        console.log("Response:", result);
         if (response.status === 200 && result.success) {
             alert('Email sent successfully!');
         } else {
             alert('Failed to send email. Please try again.');
         }
-
     }
     catch(err){
         console.error('Error sending email:', err);
         alert('An error occurred. Please try again later.');
     }
-
 } )
  
+
   const animation = lottie.loadAnimation({
     container: document.getElementById('lottie-container'), 
     renderer: 'svg',

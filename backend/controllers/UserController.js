@@ -62,7 +62,9 @@ const bcrypt = require("bcryptjs");
         }
         
         const tokenData={
-            userId:user._id
+            userId:user._id,
+            email: user.email,
+            name: user.fullname 
         };
 
         const token=await jwt.sign(tokenData,process.env.SECRET_KEY,{expiresIn:'1d'});

@@ -1,24 +1,26 @@
 const nodemailer=require('nodemailer');
 
-const send =async ({from,to,subject,text,html})=>{
- let  transporter=nodemailer.createTransport({
-    host:process.env.SMTP_HOST,
-    port:process.env.SMTP_PORT,
-    secure:false,
-    auth:{
-        user:process.env.MAIL_USER,
-        pass:process.env.MAIL_PASS
-    }
- });
+const transporter = nodemailer.createTransport({
+  service: 'gmail',  
+  secure:false,
+  port:465,
+  auth: {
+    user:"inshare59@gmail.com",  
+    pass:"sttl ugji kwdt rmzk",  
+  },
+});
 
- let info=await transporter.sendMail({
-    from:`inshare <${from}>`,
-    to:to,
-    subject:subject,
-    text:text,
+const sendEmail = async (emailTo, subject, message,html) => {
+  const mailOptions = {
+    
+    to: emailTo,
+    subject: subject,
+    text: message,
     html:html
- })
- console.log(info);
-}
+  };
+  
 
-module.exports=send;
+  return transporter.sendMail(mailOptions);
+};
+
+module.exports = sendEmail;
