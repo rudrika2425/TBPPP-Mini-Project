@@ -74,7 +74,6 @@
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
-            
             try {
                 const response = await fetch('http://localhost:8000/user/register', {
                     method: 'POST',

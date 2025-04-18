@@ -4,7 +4,6 @@ const cookieParser = require("cookie-parser");
 const connectDB=require('./db');
 
 const path=require('path')
-const cronJob = require('./cronJob');
 
 const app=express();
 require("dotenv").config();
@@ -36,5 +35,4 @@ app.use("/user",userRoute);
 app.listen(PORT,()=>{
     console.log(`server is connected on ${PORT}`);
 });
-
-cronJob();
+ 

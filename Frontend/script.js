@@ -14,6 +14,27 @@ const button=document.getElementById('sendEmailBtn');
 
 let file = null;
 
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    fetch("http://localhost:8000/upload/protected", {
+      credentials: "include",
+    })
+      .then(res => res.json())
+      .then(data => {   
+        if (!data.authenticated) {
+          window.location.href = "/Frontend/login.html";
+        } else {
+           console.log("Authenticated user:", data.user.name);
+        }
+      })
+      .catch(err => {
+        console.error("Error checking auth:", err);
+        window.location.href = "/Frontend/login.html";
+      });
+  });
+
+
 dropZone.addEventListener("dragover", (e) => {
     e.preventDefault();
     if(!dropZone.classList.contains("dragged")){
@@ -53,6 +74,9 @@ browsebtn.addEventListener("click",()=>{
     fileinput.click();
 });
  
+
+
+
 const uploadFile=(event)=>{
     event?.preventDefault();
     const file=fileinput.files[0];  
@@ -73,7 +97,7 @@ const uploadFile=(event)=>{
                 onFileUploadSuccess(xhr.responseText);
                
             } else {
-                console.error("Upload failed with status:", xhr.status);
+                
                 alert("Failed to upload the file.");
             }
         }
@@ -81,55 +105,55 @@ const uploadFile=(event)=>{
     xhr.open("POST",'http://localhost:8000/upload/file',true);
     xhr.withCredentials=true
     xhr.send(formData);
-    console.log(formData);
+   
 };
 
 const onFileUploadSuccess=(res)=>{
-    console.log('Raw Response:', res);
+  
     fileinput.value="";
     title.innerText="uploaded"
     try {
         const response = JSON.parse(res);   
-        console.log('Parsed Response:', response);
-        console.log(response.file);
+       
         if (response && response.file) {
             fileURL.value = response.file;
-            fileURL.style.display = "block";
-            document.querySelector('.email-container').style.display = 'block';
-            
+           
         } else {
             alert("Upload completed, but no file URL returned.");
         }
     } catch (error) {
-        alert("File uploaded, but an error occurred while processing the response.");
+        alert("an error occurred while processing the response.");
     }
-    setTimeout(()=>{
-        progressContainer.style.display="none";
+    setTimeout(() => {
+        const response = JSON.parse(res); 
+        progressContainer.style.display = "none";
         bgProgress.style.width = "0%";   
         percentDiv.innerText = "";  
-    }, 1000); 
+        title.innerHTML = `Drag and Drop your Files here or, <span class="browsebtn"> browse</span><p class="file-name"></p>`;
+        fileName.textContent = "";
+        document.getElementById('receiverEmail').value = '';
+        fileURL.value = response.file;
+        document.querySelector('.email-container').style.display = 'block';
+    }, 1500); 
+    fetchfiles();
 }
 
 const updateProgress=(e)=>{
     const percent=Math.round((100* e.loaded) / e.total);
-    console.log(percent); 
+  
     bgProgress.style.width=`${percent}%`;
     percentDiv.innerText=`${percent}%`;
 }
 
 button.addEventListener('click',async()=>{
     const receiverEmail = document.getElementById('receiverEmail').value;
-    console.log("receiverEmail "+receiverEmail);
     const url = fileURL.value;
-    console.log(url);
-
     if ( !receiverEmail || !fileURL) {
         alert('Please fill out all fields.');
         return;
     }
     try{
         const uuid = url.split('/').pop();
-        console.log("uuid: "+uuid);
         const response=await fetch('http://localhost:8000/upload/sendemail',{
             method:'POST',
             headers:{
@@ -143,7 +167,6 @@ button.addEventListener('click',async()=>{
         })
 
         const result=await response.json();
-        console.log("Response:", result);
         if (response.status === 200 && result.success) {
             alert('Email sent successfully!');
         } else {
@@ -151,7 +174,7 @@ button.addEventListener('click',async()=>{
         }
     }
     catch(err){
-        console.error('Error sending email:', err);
+        
         alert('An error occurred. Please try again later.');
     }
 } )
@@ -169,37 +192,17 @@ function playAnimation() {
 }
 playAnimation();
 
-
-
-const hamburgerMenu = document.getElementById('hamburger-menu');
-const sideTab = document.getElementById('side-tab');
-const closeBtn = document.getElementById('close-btn');
-const historyTab = document.getElementById('history-tab');
-const historySection = document.getElementById('history-section');
-
-
-hamburgerMenu.addEventListener('click', () => {
-    sideTab.style.left = '0';
-});
-
-
-closeBtn.addEventListener('click', () => {
-    sideTab.style.left = '-250px';
-});
-
-
-historyTab.addEventListener('click', () => {
-    historySection.style.display = 'block';
-});
-
+ 
 document.getElementById("LogOutBtn").addEventListener("click", function() {
     fetch("http://localhost:8000/user/logout", {
-        method: "GET",
+        method: "POST",
         credentials: "include", 
     })
     .then(response => response.json())
+
     .then(data => {
         if (data.message === "log out successfully") {
+            localStorage.removeItem("islogin");
             alert(data.message);  
             window.location.href = "/Frontend/login.html"; 
         } else {
@@ -207,11 +210,69 @@ document.getElementById("LogOutBtn").addEventListener("click", function() {
         }
     })
     .catch(error => {
-        console.log("Error during logout:", error);
+     
         alert("Logout failed");
     });
 });
 
 
+document.addEventListener("DOMContentLoaded", () => {
+    fetchfiles();
+  });
 
+const fetchfiles =(e)=>{
+    fetch("http://localhost:8000/upload/getfiles",{
+        method:"GET",
+        credentials:"include",
+    })
+    .then(response => response.json())
+    .then(data=>{
+        
+        const historySection = document.getElementById('history-section');
 
+        if (data.files && data.files.length > 0) {
+          
+            renderFileHistory(data.files);
+            historySection.style.display = 'block'; 
+          } else {
+            historySection.innerHTML = "<p>No files uploaded yet.</p>";
+            historySection.style.display = 'block';
+          }
+    })
+}
+
+function renderFileHistory(files) {
+    const historySection = document.getElementById('history-section');
+  
+    if (files.length === 0) {
+      historySection.innerHTML = `<p class="no-links">No active links found.</p>`;
+      return;
+    }
+  
+    const rows = files.map(file => {
+      const expiration = new Date(file.expirationDate).toLocaleString();
+      return `
+        <tr>
+          <td>${file.filename}</td>
+          <td><a href="${file.url}" target="_blank">Share</a></td>
+          <td>${expiration}</td>
+        </tr>
+      `;
+    }).join('');
+  
+    historySection.innerHTML = `
+      <table class="file-table">
+        <thead>
+          <tr>
+            <th>File Name</th>
+            <th>Sharable Link</th>
+            <th>Expires At</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows}
+        </tbody>
+      </table>
+    `;
+  }
+  

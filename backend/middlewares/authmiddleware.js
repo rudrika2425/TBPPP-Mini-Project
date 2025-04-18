@@ -4,7 +4,7 @@ const authmiddleware=(req,res,next)=>{
     const token=req.cookies.token;
     
     if(!token){
-        return res.status(403).json({message:"Access denied. No token provided."});
+        return res.status(403).json({authenticated:false});
     }
     try{
         const decoded = jwt.verify(token, process.env.SECRET_KEY);

@@ -42,6 +42,7 @@
                 const data = await response.json();
 
                 if (response.ok) {
+                    localStorage.setItem("islogin", true);
                     alert('Login successful!');
                     
                     window.location.href = '/Frontend/index.html';

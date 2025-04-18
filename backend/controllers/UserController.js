@@ -69,7 +69,7 @@ const bcrypt = require("bcryptjs");
 
         const token=await jwt.sign(tokenData,process.env.SECRET_KEY,{expiresIn:'1d'});
 
-        return res.status(200).cookie("token",token,{maxAge:24*60*60*1000,httpOnly:true,sameSite:'None', secure: true,}).json({
+        return res.status(200).cookie("token",token,{maxAge:24*60*60*1000,httpOnly:true,sameSite:'strict', secure: false,}).json({
             _id:user._id,
             email:user.email,
             fullname:user.fullname,
@@ -83,6 +83,7 @@ const bcrypt = require("bcryptjs");
 
 const logout = (req, res) => {
     try {
+       
         res.clearCookie("token", {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production', 
@@ -98,5 +99,6 @@ const logout = (req, res) => {
         });
     }
 };
+
 
 module.exports = { register, login, logout };
