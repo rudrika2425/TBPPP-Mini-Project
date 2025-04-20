@@ -8,11 +8,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
 </head>
 <body>
-    
+
     <nav class="navbar">
-      
-        <div id="logo"><img src="Images/share.png" alt=""></div>
-        <div id="Header"> InShare</div>
+        <div class="navbar-content">
+            <div id="logo"><img src="Images/share.png" alt="Logo"></div>
+            <div id="Header">InShare</div>
+        </div>
         <button id="LogOutBtn">Log Out</button>
     </nav>
 
@@ -26,7 +27,7 @@
                 <p class="file-name"></p>
             </div>
         </div>
-         
+
         <div class="progress-container">
             <div class="bg-progress"></div>
             <div class="inner-container">
@@ -35,6 +36,7 @@
                 <div class="progress-bar"></div>
             </div>
         </div>
+
         <div class="sharing-container">
             <p class="expire">Link expires in 24 hours</p>
             <div class="input-container">
@@ -47,13 +49,11 @@
     <div class="email-container">
         <label for="receiverEmail">Receiver's Email:</label>
         <input type="email" id="receiverEmail" placeholder="Enter receiver's email">
-        
         <button id="sendEmailBtn">Send</button>
     </div>
-    
+
     <h2>History</h2>
-    <div  id="history-section">
-       
+    <div id="history-section">
         <p>No Records found</p>
     </div>
 
