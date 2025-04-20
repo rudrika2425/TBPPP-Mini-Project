@@ -1,73 +1,157 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+}
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; 
-    margin: 0;
-    background-color: rgb(255, 255, 255);
-  }
-  
-  .form-container {
-    height: 400px;
-    width: 400px;
-    border: 2px solid black;
-    font-size: 22px;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2); 
-    line-height: 2.0;
-    background: #fff8e1; ; 
-    border-radius: 10px; 
-    padding: 20px;
-  }
-  
-  .form-container h1 {
-    text-align: center;
-  }
-  
-  .form-container form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .form-container form input {
-    width: 250px;
-    height: 30px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    padding: 5px;
-    margin-bottom: 10px;
-  }
-  
-  .form-container button {
-    height: 35px;
-    width: 120px;
-    border-radius: 20px;
-    font-size: 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    transition: 0.3s;
-  }
-  
-  .form-container button:hover {
-    background-color: #0056b3;
-    cursor: pointer;
-  }
-  
-  .link {
-    text-align: center;
-    padding-top: 10px;
-  }
-  
-  .link a {
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  .link a:hover {
-    text-decoration: underline;
-  }
-  
-  
-  
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, #ffe0b2, #ffcc80);
+}
+
+.container {
+  display: flex;
+  width: 850px;
+  height: 500px;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.welcome-section {
+  width: 40%;
+  background: linear-gradient(135deg, #ff9800, #f57c00);
+  color: white;
+  padding: 60px 20px;
+  text-align: center;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.welcome-section h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.welcome-section p {
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+
+.register-btn {
+  background-color: white;
+  color: #f57c00;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.register-btn:hover {
+  background-color: #ffe0b2;
+}
+
+.login-section {
+  width: 60%;
+  padding: 50px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-section h2 {
+  font-size: 26px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.input-box {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-box i {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  color: #999;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 10px 15px 10px 40px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 15px;
+  outline: none;
+}
+
+.forgot-link {
+  display: block;
+  text-align: right;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #f57c00;
+  text-decoration: none;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background-color: #f57c00;
+  color: white;
+  font-weight: bold;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 16px;
+}
+
+.login-btn:hover {
+  background-color: #e65100;
+}
+
+.social-text {
+  text-align: center;
+  margin: 20px 0 10px;
+  color: #999;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.social-icons button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  background-color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.social-icons button:hover {
+  background-color: #fff3e0;
+  transform: scale(1.05);
+}
