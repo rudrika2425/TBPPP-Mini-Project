@@ -1,7 +1,7 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(to right, #ffcc80, #ffb74d); /* Orange shade */
+  background: linear-gradient(to right, #ffcc80, #ffb74d); 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -51,10 +51,11 @@ body {
 
 .login-section {
   width: 60%;
-  padding: 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center; 
+  padding: 40px;
 }
 
 .login-section h2 {
@@ -69,6 +70,8 @@ body {
   padding: 10px;
   border-radius: 5px;
   margin-bottom: 15px;
+  width: 100%; 
+  max-width: 400px; 
 }
 
 .input-box i {
@@ -83,13 +86,16 @@ body {
   font-size: 16px;
 }
 
-.forgot-link {
-  text-align: right;
-  display: block;
+.forgot-password {
+  text-align: center;
   margin-bottom: 20px;
+}
+
+.forgot-link {
   text-decoration: none;
   font-size: 14px;
-  color: #007bff;
+  color: #ffa726;
+  transition: 0.3s;
 }
 
 .forgot-link:hover {
@@ -105,6 +111,8 @@ body {
   font-size: 16px;
   cursor: pointer;
   transition: 0.3s;
+  width: 100%; 
+  max-width: 400px; 
 }
 
 .login-btn:hover {
