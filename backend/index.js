@@ -10,10 +10,12 @@ require("dotenv").config();
 const cors = require('cors');
 const PORT = process.env.PORT || 8000;
 
-app.use(cors({
-    origin:"http://127.0.0.1:5501",
-    credentials:true
-}));
+    app.use(cors({
+        origin:"http://localhost:5501",
+        credentials:true
+    }));
+app.use(express.json());
+app.use(cookieParser());
 
 app.set('view engine','ejs');
 app.set('views',path.join(__dirname,'views'));
@@ -24,8 +26,7 @@ app.get("/",(req,res)=>{
    res.send("Backend for Inshare");
 })
 
-app.use(express.json());
-app.use(cookieParser());
+
 const userRoute = require('./routes/userRoute');
 const Upload=require('./routes/uploadRoute')
 

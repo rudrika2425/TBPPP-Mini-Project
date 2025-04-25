@@ -22,7 +22,7 @@ const Sendmail=require('../controllers/email')
 
   const upload=multer({storage});
 
-  router.post('/file',authmiddleware,upload.single('file'),async (req,res)=>{
+router.post('/file',authmiddleware,upload.single('file'),async (req,res)=>{
     try{
     if(!req.file){
         return res.status(400).json({error:'No file uploaded'});
@@ -42,10 +42,9 @@ const Sendmail=require('../controllers/email')
        
     });
     await newFile.save();
-    res.json({
+    res.status(200).json({
         message:'File uploaded succesfully',
         file:newFile.url,
-
 }) 
     }
     catch(err){
@@ -54,13 +53,7 @@ const Sendmail=require('../controllers/email')
     }
   })
 
-  router.get("/protected", authmiddleware, (req, res) => {
-    console.log("in protected route");
-    res.status(200).json({
-      authenticated:true,
-      user: req.user,
-    });
-  });
+  
  
 
   router.get('/getfiles',authmiddleware,async(req,res)=>{

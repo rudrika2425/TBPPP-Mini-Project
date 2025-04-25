@@ -14,26 +14,7 @@ const button=document.getElementById('sendEmailBtn');
 
 let file = null;
 
-
-
-document.addEventListener("DOMContentLoaded", () => {
-    fetch("http://localhost:8000/upload/protected", {
-      credentials: "include",
-    })
-      .then(res => res.json())
-      .then(data => {   
-        if (!data.authenticated) {
-          window.location.href = "/Frontend/login.html";
-        } else {
-           console.log("Authenticated user:", data.user.name);
-        }
-      })
-      .catch(err => {
-        console.error("Error checking auth:", err);
-        window.location.href = "/Frontend/login.html";
-      });
-  });
-
+ 
 
 dropZone.addEventListener("dragover", (e) => {
     e.preventDefault();
@@ -42,10 +23,11 @@ dropZone.addEventListener("dragover", (e) => {
     }
 });
 
-dropZone.addEventListener("dragleave",()=>{
+dropZone.addEventListener("dragleave", (e) => {
     e.preventDefault();
     dropZone.classList.remove("dragged");
 });
+
 dropZone.addEventListener("drop",(e)=>{
     
     const files=e.dataTransfer.files;
@@ -73,8 +55,6 @@ function displayFileName(file) {
 browsebtn.addEventListener("click",()=>{
     fileinput.click();
 });
- 
-
 
 
 const uploadFile=(event)=>{
@@ -82,6 +62,7 @@ const uploadFile=(event)=>{
     const file=fileinput.files[0];  
     const formData=new FormData();
     formData.append("file",file);
+    console.log(file);
     progressContainer.style.display="block";
     
     const xhr = new XMLHttpRequest();
@@ -93,17 +74,19 @@ const uploadFile=(event)=>{
     };
     xhr.onreadystatechange=()=>{
         if(xhr.readyState === XMLHttpRequest.DONE){
+            console.log(xhr.status);
             if (xhr.status === 200) {
                 onFileUploadSuccess(xhr.responseText);
                
             } else {
-                
+                console.log(xhr.response)
                 alert("Failed to upload the file.");
             }
         }
     };
     xhr.open("POST",'http://localhost:8000/upload/file',true);
     xhr.withCredentials=true
+    console.log(formData);
     xhr.send(formData);
    
 };

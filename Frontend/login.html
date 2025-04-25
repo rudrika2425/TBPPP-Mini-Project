@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login</title>
   <link rel="stylesheet" href="login.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-yWHJkUVzM1GDzJg4rM+otvM6dPAk7zqCWsFTbRwF1cSzxIoqYQeZ+UgEVQq5ZznINmH9Jz0DWpT8twJ3H64NAA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+ 
 </head>
 <body>
   <div class="container">
@@ -48,16 +48,18 @@
       try {
         const response = await fetch('http://localhost:8000/user/login', {
           method: 'POST',
+          credentials: 'include',
           headers: {
             'Content-Type': 'application/json',
           },
-          credentials: 'include',
+        
           body: JSON.stringify({ email, password }),
         });
 
         const data = await response.json();
-
+        
         if (response.ok) {
+          console.log(response);
           localStorage.setItem("islogin", true);
           alert('Login successful!');
           window.location.href = '/Frontend/index.html';
