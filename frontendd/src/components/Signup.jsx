@@ -41,65 +41,65 @@ const Signup = () => {
   };
 
   return (
-    <div  >
-      <div  >
-        <h1  >Sign Up</h1>
-        <form onSubmit={handleSubmit}  >
-          <label>Full Name</label>
-          <input
-            type="text"
-            name="fullname"
-            placeholder="Enter your name"
-            value={form.fullname}
-            onChange={handleChange}
-            required
-           
-          />
+    <div className="container-signup">
+  <div className="signup-box">
+    <h1>Sign Up</h1>
+    <form onSubmit={handleSubmit}>
+      <label>Full Name</label>
+      <input
+        type="text"
+        name="fullname"
+        placeholder="Enter your name"
+        value={form.fullname}
+        onChange={handleChange}
+        required
+      />
 
-          <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            placeholder="Enter your email"
-            value={form.email}
-            onChange={handleChange}
-            required
-            
-          />
+      <label>Email</label>
+      <input
+        type="email"
+        name="email"
+        placeholder="Enter your email"
+        value={form.email}
+        onChange={handleChange}
+        required
+      />
 
-          <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            placeholder="Create a password"
-            value={form.password}
-            onChange={handleChange}
-            required
-          
-          />
+      <label>Password</label>
+      <input
+        type="password"
+        name="password"
+        placeholder="Create a password"
+        value={form.password}
+        onChange={handleChange}
+        required
+      />
 
-          <label>Confirm Password</label>
-          <input
-            type="password"
-            name="confirmPassword"
-            placeholder="Re-enter password"
-            value={form.confirmPassword}
-            onChange={handleChange}
-            required
-            
-          />
+      <label>Confirm Password</label>
+      <input
+        type="password"
+        name="confirmPassword"
+        placeholder="Re-enter password"
+        value={form.confirmPassword}
+        onChange={handleChange}
+        required
+      />
 
-          <button type="submit"  >Sign Up</button>
-        </form>
+      <button type="submit">Sign Up</button>
+    </form>
 
-        <div  >
-          <p>
-            Already have an account? <a href="/login"  >Login here</a>
-          </p>
-        </div>
-      </div>
+    <div>
+      <p>
+        Already have an account? <a href="/login">Login here</a>
+      </p>
     </div>
+  </div>
+</div>
+
   );
 };
 
 export default Signup;
+import './Signup.css';
+
+
