@@ -122,15 +122,15 @@ const Home = () => {
 
       if (response.ok) {
         setUploadedFileUrl(data.file);
-        fileURLRef.current.value = data.file;  // Set the generated file URL in the input
-        percentRef.current.textContent = `100%`; // Set the percentage to 100%
-        bgProgressRef.current.style.width = `100%`;  // Complete the progress bar
-        progressBarRef.current.style.width = `100%`;  // Complete the progress bar
+        fileURLRef.current.value = data.file;   
+        percentRef.current.textContent = `100%`;  
+        bgProgressRef.current.style.width = `100%`;  
+        progressBarRef.current.style.width = `100%`;   
 
-        // Hide the progress container after upload
+      
         progressContainerRef.current.style.display = "none";
 
-        fetchHistory();  // Fetch the history after the upload is complete
+        fetchHistory();  
       } else {
         alert(data.error || "Upload failed");
       }
@@ -262,19 +262,35 @@ const Home = () => {
       </div>
 
       <h2>History</h2>
-      <div id="history-section">
-        {history.length === 0 ? (
-          <p>No Records found</p>
-        ) : (
-          history.map((file) => (
-            <div key={file._id}>
+      <h2>Active PDF Links</h2>
+<div id="history-section">
+  {history.length === 0 ? (
+    <p>No active links found.</p>
+  ) : (
+    <table className="history-table">
+      <thead>
+        <tr>
+          <th>File Name</th>
+          <th>Sharable Link</th>
+          <th>Expires At</th>
+        </tr>
+      </thead>
+      <tbody>
+        {history.map((file) => (
+          <tr key={file._id}>
+            <td>{file.filename}</td>
+            <td>
               <a href={file.url} target="_blank" rel="noopener noreferrer">
-                {file.filename}
-              </a>{" "}- {parseInt(file.size / 1000)} KB
-            </div>
-          ))
-        )}
-      </div>
+                {file.url}
+              </a>
+            </td>
+            <td>{new Date(file.expirationDate).toLocaleString()}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  )}
+</div>
     </div>
   );
 };
