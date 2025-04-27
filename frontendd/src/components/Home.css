@@ -1,0 +1,243 @@
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Navbar Styles */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ff7f32;
+    padding: 15px 30px;
+  }
+  
+  .navbar-content {
+    display: flex;
+    align-items: center;
+  }
+  
+  #logo img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  #Header {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  #LogOutBtn {
+    background-color: #fff;
+    color: #ff7f32;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  #LogOutBtn:hover {
+    background-color: #ff5722;
+    color: white;
+  }
+  
+  /* Upload Section */
+  .upload-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    margin-top: 20px;
+  }
+  
+  .drop-zone {
+    width: 80%;
+    max-width: 600px;
+    min-height: 200px;
+    border: 2px dashed #ff7f32;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: #ffe5b7;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .drop-zone.dragged {
+    background-color: #ffebcc;
+  }
+  
+  .title {
+    font-size: 18px;
+    text-align: center;
+    color: #333;
+  }
+  
+  .browsebtn {
+    color: #ff7f32;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  .file-name {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  /* Progress Container */
+  .progress-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    width: 80%;
+    max-width: 600px;
+  }
+  
+  .bg-progress {
+    width: 100%;
+    height: 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+  }
+  
+  .inner-container {
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  .title {
+    font-size: 18px;
+    color: #555;
+  }
+  
+  .percent-container {
+    margin-top: 10px;
+  }
+  
+  .progress-bar {
+    height: 10px;
+    background-color: #ff7f32;
+    border-radius: 5px;
+  }
+  
+  .progress-bar, .bg-progress {
+    transition: width 0.3s;
+  }
+  
+  /* Sharing Section */
+  .sharing-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    width: 80%;
+    max-width: 600px;
+  }
+  
+  .expire {
+    font-size: 16px;
+    color: #ff5722;
+  }
+  
+  .input-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    width: 100%;
+  }
+  
+  #fileURL {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  #fileURL:read-only {
+    background-color: #f0f0f0;
+  }
+  
+  img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  
+  img:hover {
+    opacity: 0.7;
+  }
+  
+  /* Email Section */
+  .email-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    width: 80%;
+    max-width: 600px;
+  }
+  
+  .email-container label {
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .email-container input {
+    padding: 10px;
+    width: 100%;
+    max-width: 400px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  #sendEmailBtn {
+    margin-top: 15px;
+    background-color: #ff7f32;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  #sendEmailBtn:hover {
+    background-color: #ff5722;
+  }
+  
+  /* History Section */
+  #history-section {
+    margin-top: 40px;
+    text-align: center;
+  }
+  
+  #history-section a {
+    font-size: 16px;
+    color: #ff7f32;
+    text-decoration: none;
+  }
+  
+  #history-section a:hover {
+    text-decoration: underline;
+  }
+  
+  #history-section div {
+    margin: 10px 0;
+    font-size: 14px;
+    color: #333;
+  }
+  
