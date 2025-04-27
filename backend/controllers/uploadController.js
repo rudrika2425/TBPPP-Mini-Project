@@ -27,7 +27,7 @@ const uploadFile = async (req, res) => {
     }
 
     const uploadedAt = new Date();
-    const expirationDate = new Date(uploadedAt.getTime() + 24 * 60 * 60 * 1000); // 24 hours
+    const expirationDate = new Date(uploadedAt.getTime() + 24 * 60 * 60 * 1000); 
     const fileuuid = uuidv4();
 
     const newFile = new File({
