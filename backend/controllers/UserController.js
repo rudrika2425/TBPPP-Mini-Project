@@ -64,7 +64,7 @@ const login = async (req, res) => {
       sameSite: "strict",
       maxAge: 24 * 60 * 60 * 1000,  
       path: "/"
-      // NO domain setting → important fix
+    
     });
 
     return res.status(200).json({
