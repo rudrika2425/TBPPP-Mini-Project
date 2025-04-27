@@ -65,7 +65,6 @@ const Home = () => {
 
       const data = await response.json();
       if (response.ok) {
-        localStorage.removeItem('islogin');
         alert(data.message);
         window.location.href = "/login";
       } else {
@@ -94,41 +93,51 @@ const Home = () => {
       uploadFile(selectedFile);
     }
   };
-  const uploadFile = (file) => {
+
+  const uploadFile = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
-  
-    const xhr = new XMLHttpRequest();
-  
-    xhr.upload.onprogress = (event) => {
-      if (event.lengthComputable) {
-        const percentComplete = Math.round((event.loaded / event.total) * 100);
-        percentRef.current.textContent = `${percentComplete}%`;
-        bgProgressRef.current.style.width = `${percentComplete}%`;
-        progressBarRef.current.style.width = `${percentComplete}%`;
-      }
-    };
-  
-    xhr.onreadystatechange = () => {
-      if (xhr.readyState === XMLHttpRequest.DONE) {
-        progressContainerRef.current.style.display = "none";
-        if (xhr.status === 200) {
-          const data = JSON.parse(xhr.responseText);
-          setUploadedFileUrl(data.file);
-          fileURLRef.current.value = data.file;
-          fetchHistory();
+
+    try {
+      progressContainerRef.current.style.display = "block";
+      let percent = 0;
+      const interval = setInterval(() => {
+        if (percent < 90) {
+          percent += 10;
+          percentRef.current.textContent = `${percent}%`;
+          bgProgressRef.current.style.width = `${percent}%`;
+          progressBarRef.current.style.width = `${percent}%`;
         } else {
-          alert("Upload failed");
+          clearInterval(interval);
         }
+      }, 300);
+
+      const response = await fetch("http://localhost:8000/upload/file", {
+        method: "POST",
+        credentials: "include",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setUploadedFileUrl(data.file);
+        fileURLRef.current.value = data.file;  // Set the generated file URL in the input
+        percentRef.current.textContent = `100%`; // Set the percentage to 100%
+        bgProgressRef.current.style.width = `100%`;  // Complete the progress bar
+        progressBarRef.current.style.width = `100%`;  // Complete the progress bar
+
+        // Hide the progress container after upload
+        progressContainerRef.current.style.display = "none";
+
+        fetchHistory();  // Fetch the history after the upload is complete
+      } else {
+        alert(data.error || "Upload failed");
       }
-    };
-  
-    xhr.open("POST", "http://localhost:8000/upload/file");
-    xhr.withCredentials = true; 
-    progressContainerRef.current.style.display = "block";
-    xhr.send(formData);
+    } catch (err) {
+      console.error("Error uploading file:", err);
+    }
   };
-  
 
   const fetchHistory = async () => {
     try {
@@ -138,7 +147,6 @@ const Home = () => {
       });
       const data = await response.json();
       if (response.ok) {
-        
         setHistory(data.files);
       } else {
         setHistory([]);
@@ -254,37 +262,23 @@ const Home = () => {
       </div>
 
       <h2>History</h2>
-      <h2>Active PDF Links</h2>
-    <div id="history-section">
-  {history.length === 0 ? (
-    <p>No active links found.</p>
-  ) : (
-    <table className="history-table">
-      <thead>
-        <tr>
-          <th>File Name</th>
-          <th>Sharable Link</th>
-          <th>Expires At</th>
-        </tr>
-      </thead>
-      <tbody>
-        {history.map((file) => (
-          <tr key={file._id}>
-            <td>{file.filename}</td>
-            <td>
+      <div id="history-section">
+        {history.length === 0 ? (
+          <p>No Records found</p>
+        ) : (
+          history.map((file) => (
+            <div key={file._id}>
               <a href={file.url} target="_blank" rel="noopener noreferrer">
-                {file.url}
-              </a>
-            </td>
-            <td>{new Date(file.expirationDate).toLocaleString()}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  )}
-</div>
+                {file.filename}
+              </a>{" "}- {parseInt(file.size / 1000)} KB
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 };
 
 export default Home;
+import './Home.css'; 
+
