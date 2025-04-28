@@ -65,6 +65,7 @@ const Home = () => {
 
       const data = await response.json();
       if (response.ok) {
+        localStorage.removeItem('islogin');
         alert(data.message);
         window.location.href = "/login";
       } else {
